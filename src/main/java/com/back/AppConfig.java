@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfig {
     @Bean
     public PersonService personService() {
-        return new PersonService();
+        return new PersonService(2);
     }
 }
