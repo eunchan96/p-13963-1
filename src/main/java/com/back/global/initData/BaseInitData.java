@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @RequiredArgsConstructor
 public class BaseInitData {
-    WiseSayingService wiseSayingService;
+    private final WiseSayingService wiseSayingService;
 
     @Bean
-    ApplicationRunner initApplicationRunner() {
+    ApplicationRunner baseinitApplicationRunner() {
         return args -> {
             if(wiseSayingService.count() > 0) return;
 
