@@ -38,7 +38,7 @@ public class WiseSayingController {
         WiseSaying wiseSaying = new WiseSaying(id, content, author);
         wiseSayings.add(wiseSaying);
 
-        return "%d번 명언이 생성되었습니다: ".formatted(id);
+        return "%d번 명언이 생성되었습니다. ".formatted(id);
     }
 
     @GetMapping("/wiseSayings")
@@ -51,7 +51,7 @@ public class WiseSayingController {
                  +"</ul>";
     }
 
-    @GetMapping("/wiseSayings/delete/{id}")
+    @GetMapping("/wiseSayings/{id}/delete")
     @ResponseBody
     public String delete(@PathVariable int id) {
         WiseSaying wiseSaying = findById(id).orElseThrow(() -> new IllegalArgumentException("해당 ID의 명언이 존재하지 않습니다."));
@@ -66,7 +66,7 @@ public class WiseSayingController {
                 .findFirst();
     }
 
-    @GetMapping("/wiseSayings/modify/{id}")
+    @GetMapping("/wiseSayings/{id}/modify")
     @ResponseBody
     public String modify(@PathVariable int id, @RequestParam(defaultValue = "내용") String content, @RequestParam(defaultValue = "작가") String author) {
         WiseSaying wiseSaying = findById(id).orElseThrow(() -> new IllegalArgumentException("해당 ID의 명언이 존재하지 않습니다."));
@@ -80,5 +80,17 @@ public class WiseSayingController {
 
         wiseSaying.modify(content, author);
         return "%d번 명언이 수정되었습니다.".formatted(id);
+    }
+
+    @GetMapping("/wiseSayings/{id}")
+    @ResponseBody
+    public String detail(@PathVariable int id) {
+        WiseSaying wiseSaying = findById(id).get(); // 이렇게 해도 알아서 예외를 던져줌
+
+        return """
+                <h1>%d번 명언</h1>
+                <div>작가 : %s</div>
+                <div>내용 : %s</div>
+                """.formatted(wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getContent());
     }
 }
