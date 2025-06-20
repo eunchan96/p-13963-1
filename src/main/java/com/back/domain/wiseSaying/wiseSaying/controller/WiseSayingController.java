@@ -3,6 +3,9 @@ package com.back.domain.wiseSaying.wiseSaying.controller;
 import com.back.domain.wiseSaying.wiseSaying.entity.WiseSaying;
 import com.back.domain.wiseSaying.wiseSaying.service.WiseSayingService;
 import lombok.RequiredArgsConstructor;
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,10 +73,22 @@ public class WiseSayingController {
     public String detail(@PathVariable int id) {
         WiseSaying wiseSaying = wiseSayingService.findById(id).get(); // 이렇게 해도 알아서 예외를 던져줌
 
+        // 마크다운 파서 생성Add commentMore actions
+        Parser parser = Parser.builder().build();
+
+        // 문자열을 파싱해서 Node 트리 구조로 변환
+        Node document = parser.parse(wiseSaying.getContent());
+
+        // HTML 렌더러 생성
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+
+        // Node를 HTML 문자열로 렌더링
+        String html = renderer.render(document);
+
         return """
                 <h1>%d번 명언</h1>
                 <div>작가 : %s</div>
                 <div>내용 : %s</div>
-                """.formatted(wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getContent());
+                """.formatted(wiseSaying.getId(), wiseSaying.getAuthor(), html);
     }
 }

@@ -16,10 +16,15 @@ public class BaseInitData {
         return args -> {
             if(wiseSayingService.count() > 0) return;
 
-            wiseSayingService.write("인생은 짧고 예술은 길다.", "히포크라테스");
-            wiseSayingService.write("행복은 습관이다. 그것을 몸에 지니라.", "허버트 조지 웰스");
-            wiseSayingService.write("성공은 최후의 결과가 아니라 과정이다.", "존 우든");
-            wiseSayingService.write("우리는 우리가 반복하는 것이다. 그러므로 탁월함은 행위가 아니라 습관이다.", "아리스토텔레스");
+            wiseSayingService.write("명언 1", "작가 1");
+            wiseSayingService.write("명언 2", "작가 2");
+            wiseSayingService.write("명언 3", "작가 3");
+            wiseSayingService.write("명언 4", "작가 4");
+            wiseSayingService.write("명언 5", "작가 5");
+            wiseSayingService.write("""
+                    - 규칙적인 식사를 해라
+                    - 규칙적인 운동을 해라
+                    """.stripIndent(), "작가 6");
         };
     }
 }

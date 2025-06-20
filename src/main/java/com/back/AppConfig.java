@@ -19,6 +19,13 @@ public class AppConfig {
     @Lazy
     private AppConfig self;
 
+//    @Bean
+//    public HtmlRenderer htmlRenderer() {
+//        return HtmlRenderer.builder()
+//                .escapeHtml(true)
+//                .build();
+//    }
+
     @Bean
     int version() {
         return 2;
