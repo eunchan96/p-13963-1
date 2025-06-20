@@ -1,23 +1,29 @@
 package com.back;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 
 @Configuration
 public class AppConfig {
+    @Autowired
+    @Lazy
+    private AppConfig self;
+
     @Bean
     int version() {
         return 2;
     }
 
     @Bean
-    public ApplicationRunner applicationRunner() {
+    public ApplicationRunner baseInitDataApplicationRunner() {
         return args -> {
             System.out.println("AppConfig.applicationRunner() 작동");
 
-            work1();
-            work2();
+            self.work1();
+            self.work2();
         };
     }
 
